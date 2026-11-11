@@ -22,6 +22,7 @@ import {
   BellOff,
 } from "lucide-react";
 import { ChatAvatar } from "@/components/ui/whatsapp/chat-avatar";
+import { cn } from "@/components/ui/whatsapp/cn";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -116,7 +117,7 @@ const conversations: Chat[] = [
 
 type FilterTab = "all" | "unread" | "new-customer";
 
-// ─── Left sidebar icon ────────────────────────────────────────────────────────
+// ─── SidebarIcon ──────────────────────────────────────────────────────────────
 
 function SidebarIcon({
   children,
@@ -124,18 +125,23 @@ function SidebarIcon({
   badge,
   label,
   onClick,
+  className,
 }: {
   children: React.ReactNode;
   active?: boolean;
   badge?: number;
   label?: string;
   onClick?: () => void;
+  className?: string;
 }) {
   return (
     <button
       onClick={onClick}
       title={label}
-      className="relative flex items-center justify-center w-10 h-10 rounded-xl transition-colors hover:bg-black/5"
+      className={cn(
+        "relative flex items-center justify-center w-10 h-10 rounded-xl transition-colors hover:bg-black/5",
+        className
+      )}
       style={{ color: active ? "#00a884" : "#54656f" }}
     >
       {children}
@@ -148,19 +154,25 @@ function SidebarIcon({
   );
 }
 
-// ─── Left icon sidebar ────────────────────────────────────────────────────────
+// ─── IconSidebar ──────────────────────────────────────────────────────────────
 
 function IconSidebar({
   activeSidebarTab,
   setActiveSidebarTab,
+  className,
 }: {
   activeSidebarTab: string;
   setActiveSidebarTab: (t: string) => void;
+  className?: string;
 }) {
   return (
     <aside
-      className="flex flex-col items-center py-3 gap-1 shrink-0"
-      style={{ width: 63, backgroundColor: "#f0f2f5", borderRight: "1px solid rgba(17,27,33,0.08)" }}
+      className={cn("flex flex-col items-center py-3 gap-1 shrink-0", className)}
+      style={{
+        width: 63,
+        backgroundColor: "#f0f2f5",
+        borderRight: "1px solid rgba(17,27,33,0.08)",
+      }}
     >
       {/* WA logo */}
       <div className="mb-2">
@@ -169,7 +181,6 @@ function IconSidebar({
         </svg>
       </div>
 
-      {/* Nav icons */}
       <SidebarIcon
         active={activeSidebarTab === "chats"}
         badge={1}
@@ -218,10 +229,8 @@ function IconSidebar({
         <Star size={20} />
       </SidebarIcon>
 
-      {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Bottom icons */}
       <SidebarIcon label="Meta AI">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
@@ -239,21 +248,26 @@ function IconSidebar({
   );
 }
 
-// ─── Chat list item (web) ─────────────────────────────────────────────────────
+// ─── ChatListItem ─────────────────────────────────────────────────────────────
 
 function ChatListItem({
   chat,
   isActive,
   onSelect,
+  className,
 }: {
   chat: Chat;
   isActive: boolean;
   onSelect: () => void;
+  className?: string;
 }) {
   return (
     <button
       onClick={onSelect}
-      className="w-full flex items-center gap-3 px-3 py-3 text-left transition-colors"
+      className={cn(
+        "w-full flex items-center gap-3 px-3 py-3 text-left transition-colors",
+        className
+      )}
       style={{ backgroundColor: isActive ? "#f0f2f5" : "transparent" }}
       onMouseEnter={(e) => {
         if (!isActive) (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#f9fafb";
@@ -326,14 +340,16 @@ function ChatListItem({
   );
 }
 
-// ─── Chat list panel ──────────────────────────────────────────────────────────
+// ─── ChatListPanel ────────────────────────────────────────────────────────────
 
 function ChatListPanel({
   selected,
   onSelect,
+  className,
 }: {
   selected: string;
   onSelect: (id: string) => void;
+  className?: string;
 }) {
   const [filterTab, setFilterTab] = useState<FilterTab>("all");
   const [showBanner, setShowBanner] = useState(true);
@@ -347,8 +363,12 @@ function ChatListPanel({
 
   return (
     <div
-      className="flex flex-col shrink-0 overflow-hidden"
-      style={{ width: 350, borderRight: "1px solid rgba(17,27,33,0.08)", backgroundColor: "#ffffff" }}
+      className={cn("flex flex-col shrink-0 overflow-hidden", className)}
+      style={{
+        width: 350,
+        borderRight: "1px solid rgba(17,27,33,0.08)",
+        backgroundColor: "#ffffff",
+      }}
     >
       {/* Panel header */}
       <div
@@ -368,13 +388,12 @@ function ChatListPanel({
 
       {/* Search */}
       <div className="px-3 py-2 shrink-0" style={{ backgroundColor: "#f0f2f5" }}>
-        <div className="flex items-center gap-2 bg-white rounded-lg px-3 py-2" style={{ border: "none" }}>
+        <div className="flex items-center gap-2 bg-white rounded-lg px-3 py-2">
           <Search size={15} className="text-[#54656f] shrink-0" />
           <input
             type="text"
             placeholder="Search or start a new chat"
-            className="flex-1 text-[13.5px] text-[#111b21] placeholder-[#8696a0] outline-none bg-transparent"
-            style={{ border: "none" }}
+            className="flex-1 text-[13.5px] text-[#111b21] placeholder-[#8696a0] outline-none bg-transparent border-none"
           />
         </div>
       </div>
@@ -456,13 +475,22 @@ function ChatListPanel({
   );
 }
 
-// ─── Chat area (right panel) ───────────────────────────────────────────────────
+// ─── ChatArea ─────────────────────────────────────────────────────────────────
 
-function ChatArea({ chat }: { chat: Chat | undefined }) {
+function ChatArea({
+  chat,
+  className,
+}: {
+  chat: Chat | undefined;
+  className?: string;
+}) {
   if (!chat) {
     return (
       <div
-        className="flex-1 flex flex-col items-center justify-center gap-3"
+        className={cn(
+          "flex-1 flex flex-col items-center justify-center gap-3",
+          className
+        )}
         style={{ backgroundColor: "#f0f2f5" }}
       >
         <div className="w-16 h-16 rounded-full bg-[#dfe5e7] flex items-center justify-center">
@@ -479,7 +507,7 @@ function ChatArea({ chat }: { chat: Chat | undefined }) {
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
+    <div className={cn("flex-1 flex flex-col overflow-hidden", className)}>
       {/* Chat header */}
       <div
         className="flex items-center justify-between px-4 py-2.5 shrink-0"
@@ -534,10 +562,8 @@ function ChatArea({ chat }: { chat: Chat | undefined }) {
         className="flex-1 relative overflow-hidden"
         style={{ backgroundColor: "#efeae2" }}
       >
-        {/* Doodle background */}
         <div className="absolute inset-0 wa-doodle opacity-40 pointer-events-none" />
 
-        {/* Messages */}
         <div className="relative z-10 flex flex-col gap-2 p-4 h-full overflow-y-auto">
           {/* Encryption notice */}
           <div className="flex justify-center my-2">
@@ -564,10 +590,7 @@ function ChatArea({ chat }: { chat: Chat | undefined }) {
           <div className="flex justify-start">
             <div
               className="max-w-xs rounded-lg rounded-tl-none px-3 py-2 text-[14px] text-[#111b21]"
-              style={{
-                backgroundColor: "#ffffff",
-                boxShadow: "0 1px 0.5px rgba(11,20,26,0.13)",
-              }}
+              style={{ backgroundColor: "#ffffff", boxShadow: "0 1px 0.5px rgba(11,20,26,0.13)" }}
             >
               <span>Hello</span>
               <span className="ml-2 text-[11px] text-[#667781]">11:10 PM</span>
@@ -614,10 +637,7 @@ function ChatArea({ chat }: { chat: Chat | undefined }) {
           <div className="flex justify-end">
             <div
               className="max-w-xs rounded-lg rounded-tr-none px-3 py-2 text-[14px] text-[#111b21]"
-              style={{
-                backgroundColor: "#d9fdd3",
-                boxShadow: "0 1px 0.5px rgba(11,20,26,0.13)",
-              }}
+              style={{ backgroundColor: "#d9fdd3", boxShadow: "0 1px 0.5px rgba(11,20,26,0.13)" }}
             >
               <span>Hello</span>
               <span className="inline-flex items-center gap-1 ml-2">
@@ -675,7 +695,7 @@ export default function WebPage() {
       </div>
 
       {/* Main 3-panel layout */}
-      <div className="flex flex-1 overflow-hidden rounded-none">
+      <div className="flex flex-1 overflow-hidden">
         <IconSidebar
           activeSidebarTab={activeSidebarTab}
           setActiveSidebarTab={setActiveSidebarTab}

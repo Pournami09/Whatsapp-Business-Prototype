@@ -14,8 +14,9 @@ import {
   Camera,
 } from "lucide-react";
 import { ChatAvatar } from "@/components/ui/whatsapp/chat-avatar";
+import { cn } from "@/components/ui/whatsapp/cn";
 
-// ─── Data ───────────────────────────────────────────────────────────────────
+// ─── Data ────────────────────────────────────────────────────────────────────
 
 type Label = { text: string; textColor: string; bg: string };
 
@@ -118,21 +119,26 @@ const conversations: Chat[] = [
 type NavTab = "chats" | "updates" | "communities" | "calls";
 type FilterTab = "all" | "unread" | "favorites" | "groups";
 
-// ─── Chat list item ──────────────────────────────────────────────────────────
+// ─── ChatListItem ─────────────────────────────────────────────────────────────
 
 function ChatListItem({
   chat,
   isSelected,
   onSelect,
+  className,
 }: {
   chat: Chat;
   isSelected: boolean;
   onSelect: () => void;
+  className?: string;
 }) {
   return (
     <button
       onClick={onSelect}
-      className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors"
+      className={cn(
+        "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors",
+        className
+      )}
       style={{ backgroundColor: isSelected ? "#f0f2f5" : "transparent" }}
     >
       {/* Avatar */}
@@ -206,11 +212,16 @@ function ChatListItem({
   );
 }
 
-// ─── Status bar simulation ───────────────────────────────────────────────────
+// ─── StatusBar ────────────────────────────────────────────────────────────────
 
-function StatusBar() {
+function StatusBar({ className }: { className?: string }) {
   return (
-    <div className="h-10 bg-white flex items-center justify-between px-6 text-[12px] font-semibold text-[#111b21] shrink-0">
+    <div
+      className={cn(
+        "h-10 bg-white flex items-center justify-between px-6 text-[12px] font-semibold text-[#111b21] shrink-0",
+        className
+      )}
+    >
       <span>9:41</span>
       <div className="flex items-center gap-1.5">
         <svg width="16" height="12" viewBox="0 0 16 12" fill="#111b21">
@@ -234,11 +245,11 @@ function StatusBar() {
   );
 }
 
-// ─── Top app bar ─────────────────────────────────────────────────────────────
+// ─── TopAppBar ────────────────────────────────────────────────────────────────
 
-function TopAppBar() {
+function TopAppBar({ className }: { className?: string }) {
   return (
-    <div className="bg-white px-4 pt-1 pb-2 shrink-0">
+    <div className={cn("bg-white px-4 pt-1 pb-2 shrink-0", className)}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <svg viewBox="0 0 24 24" width="28" height="28" fill="#00a884">
@@ -262,14 +273,16 @@ function TopAppBar() {
   );
 }
 
-// ─── Filter tabs ─────────────────────────────────────────────────────────────
+// ─── FilterTabs ───────────────────────────────────────────────────────────────
 
 function FilterTabs({
   active,
   onChange,
+  className,
 }: {
   active: FilterTab;
   onChange: (t: FilterTab) => void;
+  className?: string;
 }) {
   const tabs: { id: FilterTab; label: string }[] = [
     { id: "all", label: "All" },
@@ -279,7 +292,12 @@ function FilterTabs({
   ];
 
   return (
-    <div className="flex border-b border-[rgba(17,27,33,0.08)] bg-white px-2 shrink-0">
+    <div
+      className={cn(
+        "flex border-b border-[rgba(17,27,33,0.08)] bg-white px-2 shrink-0",
+        className
+      )}
+    >
       {tabs.map((tab) => (
         <button
           key={tab.id}
@@ -297,16 +315,22 @@ function FilterTabs({
   );
 }
 
-// ─── Bottom nav ───────────────────────────────────────────────────────────────
+// ─── BottomNav ────────────────────────────────────────────────────────────────
 
 function BottomNav({
   active,
   onChange,
+  className,
 }: {
   active: NavTab;
   onChange: (t: NavTab) => void;
+  className?: string;
 }) {
-  const tabs: { id: NavTab; label: string; icon: React.ComponentType<{ size?: number; className?: string }> }[] = [
+  const tabs: {
+    id: NavTab;
+    label: string;
+    icon: React.ComponentType<{ size?: number; className?: string }>;
+  }[] = [
     { id: "chats", label: "Chats", icon: MessageSquare },
     {
       id: "updates",
@@ -324,7 +348,12 @@ function BottomNav({
   ];
 
   return (
-    <nav className="bg-white border-t border-[rgba(17,27,33,0.08)] flex pb-safe shrink-0">
+    <nav
+      className={cn(
+        "bg-white border-t border-[rgba(17,27,33,0.08)] flex pb-safe shrink-0",
+        className
+      )}
+    >
       {tabs.map(({ id, label, icon: Icon }) => (
         <button
           key={id}
@@ -386,8 +415,7 @@ export default function MobilePage() {
           height: 844,
           borderRadius: 44,
           border: "10px solid #1a1a1a",
-          boxShadow:
-            "0 70px 140px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.15)",
+          boxShadow: "0 70px 140px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.15)",
         }}
       >
         {/* Notch */}
