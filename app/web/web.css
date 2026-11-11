@@ -1,0 +1,765 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Web Prototype — page-scoped styles
+   All rules are scoped under .wa-web-playground to avoid conflicts with
+   the mobile prototype styles when both pages are loaded in the same session.
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Playground wrapper ──────────────────────────────────────────────────── */
+
+.wa-web-playground {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #111b21;
+  overflow: hidden;
+}
+
+.wa-web-playground .wa-web-playground__topbar {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #1a2a33;
+}
+
+.wa-web-playground .wa-web-playground__back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.15s;
+  text-decoration: none;
+}
+
+.wa-web-playground .wa-web-playground__back-link:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.wa-web-playground .wa-web-playground__topbar-sep {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.75rem;
+}
+
+.wa-web-playground .wa-web-playground__topbar-label {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* ─── 3-panel layout ──────────────────────────────────────────────────────── */
+
+.wa-web-playground .wa-web-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ─── Icon sidebar ────────────────────────────────────────────────────────── */
+
+.wa-web-playground .wa-icon-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 0;
+  gap: 0.25rem;
+  flex-shrink: 0;
+  width: 63px;
+  background-color: #f0f2f5;
+  border-right: 1px solid rgba(17, 27, 33, 0.08);
+}
+
+.wa-web-playground .wa-icon-sidebar__logo {
+  margin-bottom: 0.5rem;
+}
+
+.wa-web-playground .wa-icon-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.wa-web-playground .wa-icon-sidebar__spacer {
+  flex: 1;
+}
+
+.wa-web-playground .wa-icon-sidebar__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.wa-web-playground .wa-icon-sidebar__avatar {
+  margin-top: 0.25rem;
+}
+
+/* ─── Sidebar icon button ─────────────────────────────────────────────────── */
+
+.wa-web-playground .wa-sidebar-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  transition: background-color 0.15s;
+  color: #54656f;
+}
+
+.wa-web-playground .wa-sidebar-icon:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.wa-web-playground .wa-sidebar-icon--active {
+  color: #00a884;
+}
+
+.wa-web-playground .wa-sidebar-icon__badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 16px;
+  height: 1rem;
+  background-color: #00a884;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+/* ─── Chat list panel ─────────────────────────────────────────────────────── */
+
+.wa-web-playground .wa-chat-list-panel {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  width: 350px;
+  border-right: 1px solid rgba(17, 27, 33, 0.08);
+  background-color: #ffffff;
+}
+
+.wa-web-playground .wa-chat-list-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  flex-shrink: 0;
+  background-color: #f0f2f5;
+}
+
+.wa-web-playground .wa-chat-list-panel__header-title {
+  color: #111b21;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.wa-web-playground .wa-chat-list-panel__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.wa-web-playground .wa-chat-list-panel__header-btn {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  transition: background-color 0.15s;
+  color: #54656f;
+}
+
+.wa-web-playground .wa-chat-list-panel__header-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.wa-web-playground .wa-chat-list-panel__search-wrap {
+  padding: 0.5rem 0.75rem;
+  flex-shrink: 0;
+  background-color: #f0f2f5;
+}
+
+.wa-web-playground .wa-chat-list-panel__search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.wa-web-playground .wa-chat-list-panel__search-icon {
+  color: #54656f;
+  flex-shrink: 0;
+}
+
+.wa-web-playground .wa-chat-list-panel__search-input {
+  flex: 1;
+  font-size: 13.5px;
+  color: #111b21;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.wa-web-playground .wa-chat-list-panel__search-input::placeholder {
+  color: #8696a0;
+}
+
+.wa-web-playground .wa-chat-list-panel__filters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  flex-shrink: 0;
+  background-color: white;
+}
+
+.wa-web-playground .wa-chat-list-panel__filter-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+  background-color: #f0f2f5;
+  color: #111b21;
+}
+
+.wa-web-playground .wa-chat-list-panel__filter-chip--active {
+  background-color: #d9fdd3;
+  color: #1a5c38;
+}
+
+.wa-web-playground .wa-chat-list-panel__filter-chip-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.wa-web-playground .wa-chat-list-panel__filters-more {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: auto;
+  color: #54656f;
+}
+
+.wa-web-playground .wa-chat-list-panel__notification-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  flex-shrink: 0;
+  background-color: #fff8e1;
+  border-bottom: 1px solid rgba(17, 27, 33, 0.06);
+}
+
+.wa-web-playground .wa-chat-list-panel__notification-icon {
+  color: #54656f;
+  flex-shrink: 0;
+}
+
+.wa-web-playground .wa-chat-list-panel__notification-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 12.5px;
+  color: #54656f;
+}
+
+.wa-web-playground .wa-chat-list-panel__notification-cta {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #00a884;
+}
+
+.wa-web-playground .wa-chat-list-panel__notification-dismiss {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  transition: background-color 0.15s;
+  color: #54656f;
+}
+
+.wa-web-playground .wa-chat-list-panel__notification-dismiss:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.wa-web-playground .wa-chat-list-panel__list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.wa-web-playground .wa-chat-list-panel__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 8rem;
+  color: #667781;
+  gap: 0.5rem;
+}
+
+.wa-web-playground .wa-chat-list-panel__empty-icon {
+  opacity: 0.3;
+}
+
+/* ─── Chat list item ──────────────────────────────────────────────────────── */
+
+.wa-web-playground .wa-chat-list-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  text-align: left;
+  transition: background-color 0.15s;
+  background-color: transparent;
+}
+
+.wa-web-playground .wa-chat-list-item:hover {
+  background-color: #f9fafb;
+}
+
+.wa-web-playground .wa-chat-list-item--active,
+.wa-web-playground .wa-chat-list-item--active:hover {
+  background-color: #f0f2f5;
+}
+
+.wa-web-playground .wa-chat-list-item__avatar {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.wa-web-playground .wa-chat-list-item__avatar-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 1rem;
+  height: 1rem;
+  background-color: #00a884;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.wa-web-playground .wa-chat-list-item__avatar-badge--ai {
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.wa-web-playground .wa-chat-list-item__content {
+  flex: 1;
+  min-width: 0;
+  border-bottom: 1px solid rgba(17, 27, 33, 0.06);
+  padding-bottom: 0.75rem;
+  margin-bottom: -0.75rem;
+}
+
+.wa-web-playground .wa-chat-list-item__row {
+  display: flex;
+}
+
+.wa-web-playground .wa-chat-list-item__row--top {
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.125rem;
+}
+
+.wa-web-playground .wa-chat-list-item__row--bottom {
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.wa-web-playground .wa-chat-list-item__name {
+  font-weight: 600;
+  font-size: 14.5px;
+  color: #111b21;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 0.5rem;
+  line-height: 1.25;
+}
+
+.wa-web-playground .wa-chat-list-item__timestamp {
+  font-size: 11px;
+  flex-shrink: 0;
+  color: #667781;
+}
+
+.wa-web-playground .wa-chat-list-item__timestamp--unread {
+  color: #00a884;
+}
+
+.wa-web-playground .wa-chat-list-item__preview {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 13px;
+  color: #667781;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.375;
+}
+
+.wa-web-playground .wa-chat-list-item__read-tick {
+  flex-shrink: 0;
+  color: #53bdeb;
+}
+
+.wa-web-playground .wa-chat-list-item__voice-icon {
+  flex-shrink: 0;
+  color: #667781;
+}
+
+.wa-web-playground .wa-chat-list-item__unread-badge {
+  flex-shrink: 0;
+  min-width: 18px;
+  height: 18px;
+  background-color: #00a884;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.25rem;
+  line-height: 1;
+}
+
+.wa-web-playground .wa-chat-list-item__labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.wa-web-playground .wa-chat-list-item__label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.125rem 0.375rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+/* ─── Chat area ───────────────────────────────────────────────────────────── */
+
+.wa-web-playground .wa-chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.wa-web-playground .wa-chat-area--empty {
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background-color: #f0f2f5;
+}
+
+.wa-web-playground .wa-chat-area__empty-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 9999px;
+  background-color: #dfe5e7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8696a0;
+}
+
+.wa-web-playground .wa-chat-area__empty-title {
+  font-size: 1rem;
+  color: #54656f;
+  font-weight: 300;
+}
+
+.wa-web-playground .wa-chat-area__empty-subtitle {
+  font-size: 13px;
+  color: #8696a0;
+}
+
+.wa-web-playground .wa-chat-area__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem 1rem;
+  flex-shrink: 0;
+  background-color: #f0f2f5;
+  border-bottom: 1px solid rgba(17, 27, 33, 0.06);
+}
+
+.wa-web-playground .wa-chat-area__header-contact {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.wa-web-playground .wa-chat-area__header-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.wa-web-playground .wa-chat-area__header-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wa-web-playground .wa-chat-area__header-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111b21;
+  line-height: 1.25;
+}
+
+.wa-web-playground .wa-chat-area__header-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.125rem 0.375rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.wa-web-playground .wa-chat-area__header-subtitle {
+  font-size: 12px;
+  color: #667781;
+}
+
+.wa-web-playground .wa-chat-area__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.wa-web-playground .wa-chat-area__header-btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  transition: background-color 0.15s;
+  color: #54656f;
+}
+
+.wa-web-playground .wa-chat-area__header-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.wa-web-playground .wa-chat-area__messages {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: #efeae2;
+}
+
+.wa-web-playground .wa-chat-area__messages-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.wa-web-playground .wa-chat-area__messages-scroll {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.wa-web-playground .wa-chat-area__encryption-notice {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.wa-web-playground .wa-chat-area__encryption-notice-bubble {
+  text-align: center;
+  font-size: 11.5px;
+  color: #54656f;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  max-width: 20rem;
+  background-color: #fffde7;
+}
+
+.wa-web-playground .wa-chat-area__encryption-notice-link {
+  color: #027eb5;
+  cursor: pointer;
+}
+
+.wa-web-playground .wa-chat-area__date-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wa-web-playground .wa-chat-area__date-divider-label {
+  font-size: 11.5px;
+  color: #54656f;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background-color: #fffde7;
+}
+
+.wa-web-playground .wa-chat-area__message {
+  display: flex;
+}
+
+.wa-web-playground .wa-chat-area__message--incoming {
+  justify-content: flex-start;
+}
+
+.wa-web-playground .wa-chat-area__message--outgoing {
+  justify-content: flex-end;
+}
+
+.wa-web-playground .wa-chat-area__message-bubble {
+  max-width: 20rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 14px;
+  color: #111b21;
+  box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);
+}
+
+.wa-web-playground .wa-chat-area__message--incoming .wa-chat-area__message-bubble {
+  border-top-left-radius: 0;
+  background-color: #ffffff;
+}
+
+.wa-web-playground .wa-chat-area__message--outgoing .wa-chat-area__message-bubble {
+  border-top-right-radius: 0;
+  background-color: #d9fdd3;
+}
+
+.wa-web-playground .wa-chat-area__message-meta {
+  margin-left: 0.5rem;
+  font-size: 11px;
+  color: #667781;
+}
+
+.wa-web-playground .wa-chat-area__message-read-tick {
+  color: #53bdeb;
+}
+
+.wa-web-playground .wa-chat-area__voice-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  border-top-right-radius: 0;
+  padding: 0.5rem 0.75rem;
+  background-color: #d9fdd3;
+  box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);
+  min-width: 180px;
+}
+
+.wa-web-playground .wa-chat-area__voice-note-play {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background-color: #00a884;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wa-web-playground .wa-chat-area__voice-note-body {
+  flex: 1;
+}
+
+.wa-web-playground .wa-chat-area__voice-note-waveform {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 0.25rem;
+}
+
+.wa-web-playground .wa-chat-area__voice-note-bar {
+  width: 2px;
+  border-radius: 9999px;
+  background-color: #00a884;
+}
+
+.wa-web-playground .wa-chat-area__voice-note-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wa-web-playground .wa-chat-area__voice-note-duration {
+  font-size: 11px;
+  color: #667781;
+}
+
+.wa-web-playground .wa-chat-area__input-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  flex-shrink: 0;
+  background-color: #f0f2f5;
+}
+
+.wa-web-playground .wa-chat-area__input-btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  transition: background-color 0.15s;
+  color: #54656f;
+}
+
+.wa-web-playground .wa-chat-area__input-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.wa-web-playground .wa-chat-area__input-field {
+  flex: 1;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 14px;
+  color: #8696a0;
+  cursor: text;
+}

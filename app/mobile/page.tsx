@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { ChatAvatar } from "@/components/ui/whatsapp/chat-avatar";
 import { cn } from "@/components/ui/whatsapp/cn";
+import "./mobile.css";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -137,13 +138,12 @@ function ChatListItem({
       onClick={onSelect}
       className={cn(
         "wa-chat-list-item",
-        "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors",
+        isSelected && "wa-chat-list-item--active",
         className
       )}
-      style={{ backgroundColor: isSelected ? "#f0f2f5" : "transparent" }}
     >
       {/* Avatar */}
-      <div className="wa-chat-list-item__avatar relative shrink-0">
+      <div className="wa-chat-list-item__avatar">
         <ChatAvatar
           name={chat.name}
           size={50}
@@ -151,57 +151,55 @@ function ChatListItem({
           style={{ backgroundColor: chat.avatarColor }}
         />
         {chat.isGroup && (
-          <span className="wa-chat-list-item__avatar-badge wa-chat-list-item__avatar-badge--group absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-[#00a884] rounded-full flex items-center justify-center">
-            <Users size={9} className="text-white" />
+          <span className="wa-chat-list-item__avatar-badge wa-chat-list-item__avatar-badge--group">
+            <Users size={9} />
           </span>
         )}
         {chat.isAI && (
-          <span className="wa-chat-list-item__avatar-badge wa-chat-list-item__avatar-badge--ai absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-[#00a884] rounded-full flex items-center justify-center text-white text-[8px] font-bold">
+          <span className="wa-chat-list-item__avatar-badge wa-chat-list-item__avatar-badge--ai">
             AI
           </span>
         )}
       </div>
 
       {/* Content */}
-      <div className="wa-chat-list-item__content flex-1 min-w-0 border-b border-[rgba(17,27,33,0.08)] pb-3 -mb-3">
+      <div className="wa-chat-list-item__content">
         {/* Row 1: name + timestamp */}
-        <div className="wa-chat-list-item__row wa-chat-list-item__row--top flex items-center justify-between mb-0.5">
-          <span className="wa-chat-list-item__name font-semibold text-[15px] text-[#111b21] truncate pr-2 leading-tight">
-            {chat.name}
-          </span>
+        <div className="wa-chat-list-item__row wa-chat-list-item__row--top">
+          <span className="wa-chat-list-item__name">{chat.name}</span>
           <span
-            className="wa-chat-list-item__timestamp text-[11px] shrink-0"
-            style={{ color: (chat.unread ?? 0) > 0 ? "#00a884" : "#667781" }}
+            className={cn(
+              "wa-chat-list-item__timestamp",
+              (chat.unread ?? 0) > 0 && "wa-chat-list-item__timestamp--unread"
+            )}
           >
             {chat.timestamp}
           </span>
         </div>
 
         {/* Row 2: preview + unread badge */}
-        <div className="wa-chat-list-item__row wa-chat-list-item__row--bottom flex items-start justify-between gap-2">
-          <span className="wa-chat-list-item__preview flex items-center gap-1 text-[13px] text-[#667781] truncate leading-snug">
+        <div className="wa-chat-list-item__row wa-chat-list-item__row--bottom">
+          <span className="wa-chat-list-item__preview">
             {chat.isOutgoing && (
-              <CheckCheck size={14} className="wa-chat-list-item__read-tick shrink-0 text-[#53bdeb]" />
+              <CheckCheck size={14} className="wa-chat-list-item__read-tick" />
             )}
             {chat.isVoiceNote && (
-              <Mic size={13} className="wa-chat-list-item__voice-icon shrink-0 text-[#667781]" />
+              <Mic size={13} className="wa-chat-list-item__voice-icon" />
             )}
             {chat.lastMessage}
           </span>
           {(chat.unread ?? 0) > 0 && (
-            <span className="wa-chat-list-item__unread-badge shrink-0 min-w-[18px] h-[18px] bg-[#00a884] text-white text-[11px] font-semibold rounded-full flex items-center justify-center px-1 leading-none">
-              {chat.unread}
-            </span>
+            <span className="wa-chat-list-item__unread-badge">{chat.unread}</span>
           )}
         </div>
 
         {/* Row 3: labels */}
         {chat.labels && chat.labels.length > 0 && (
-          <div className="wa-chat-list-item__labels flex flex-wrap gap-1 mt-1.5">
+          <div className="wa-chat-list-item__labels">
             {chat.labels.map((l) => (
               <span
                 key={l.text}
-                className="wa-chat-list-item__label text-[9px] font-bold tracking-wide px-1.5 py-0.5 rounded-full uppercase"
+                className="wa-chat-list-item__label"
                 style={{ color: l.textColor, backgroundColor: l.bg }}
               >
                 {l.text}
@@ -218,15 +216,9 @@ function ChatListItem({
 
 function StatusBar({ className }: { className?: string }) {
   return (
-    <div
-      className={cn(
-        "wa-status-bar",
-        "h-10 bg-white flex items-center justify-between px-6 text-[12px] font-semibold text-[#111b21] shrink-0",
-        className
-      )}
-    >
+    <div className={cn("wa-status-bar", className)}>
       <span className="wa-status-bar__time">9:41</span>
-      <div className="wa-status-bar__indicators flex items-center gap-1.5">
+      <div className="wa-status-bar__indicators">
         <svg className="wa-status-bar__signal" width="16" height="12" viewBox="0 0 16 12" fill="#111b21">
           <rect x="0" y="4" width="2.5" height="8" rx="0.5" />
           <rect x="4" y="2.5" width="2.5" height="9.5" rx="0.5" />
@@ -252,23 +244,23 @@ function StatusBar({ className }: { className?: string }) {
 
 function TopAppBar({ className }: { className?: string }) {
   return (
-    <div className={cn("wa-top-app-bar", "bg-white px-4 pt-1 pb-2 shrink-0", className)}>
-      <div className="wa-top-app-bar__inner flex items-center justify-between">
-        <div className="wa-top-app-bar__brand flex items-center gap-2">
+    <div className={cn("wa-top-app-bar", className)}>
+      <div className="wa-top-app-bar__inner">
+        <div className="wa-top-app-bar__brand">
           <svg className="wa-top-app-bar__logo" viewBox="0 0 24 24" width="28" height="28" fill="#00a884">
             <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 0 1-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24zM8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28c-.25-.12-1.47-.72-1.69-.8-.23-.08-.37-.12-.56.12-.16.19-.62.8-.76.96-.11.17-.23.19-.42.1-.19-.09-.81-.3-1.54-.95-.57-.5-.95-1.12-1.06-1.31-.11-.19-.01-.29.08-.39.08-.09.19-.23.28-.35.09-.12.12-.21.19-.35.06-.13.03-.25-.02-.35-.06-.09-.56-1.35-.77-1.84-.2-.48-.41-.42-.56-.43-.14 0-.3-.01-.47-.01z" />
           </svg>
-          <span className="wa-top-app-bar__title text-[#111b21] text-xl font-bold tracking-tight">WhatsApp</span>
+          <span className="wa-top-app-bar__title">WhatsApp</span>
         </div>
-        <div className="wa-top-app-bar__actions flex items-center gap-1">
-          <button className="wa-top-app-bar__action-btn wa-top-app-bar__action-btn--camera w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#f0f2f5] transition-colors">
-            <Camera size={20} className="text-[#54656f]" />
+        <div className="wa-top-app-bar__actions">
+          <button className="wa-top-app-bar__action-btn wa-top-app-bar__action-btn--camera">
+            <Camera size={20} />
           </button>
-          <button className="wa-top-app-bar__action-btn wa-top-app-bar__action-btn--search w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#f0f2f5] transition-colors">
-            <Search size={20} className="text-[#54656f]" />
+          <button className="wa-top-app-bar__action-btn wa-top-app-bar__action-btn--search">
+            <Search size={20} />
           </button>
-          <button className="wa-top-app-bar__action-btn wa-top-app-bar__action-btn--menu w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#f0f2f5] transition-colors">
-            <MoreVertical size={20} className="text-[#54656f]" />
+          <button className="wa-top-app-bar__action-btn wa-top-app-bar__action-btn--menu">
+            <MoreVertical size={20} />
           </button>
         </div>
       </div>
@@ -295,27 +287,19 @@ function FilterTabs({
   ];
 
   return (
-    <div
-      className={cn(
-        "wa-filter-tabs",
-        "flex border-b border-[rgba(17,27,33,0.08)] bg-white px-2 shrink-0",
-        className
-      )}
-    >
+    <div className={cn("wa-filter-tabs", className)}>
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onChange(tab.id)}
           className={cn(
             "wa-filter-tabs__tab",
-            active === tab.id && "wa-filter-tabs__tab--active",
-            "relative flex-1 py-3 text-[13px] font-semibold transition-colors"
+            active === tab.id && "wa-filter-tabs__tab--active"
           )}
-          style={{ color: active === tab.id ? "#00a884" : "#667781" }}
         >
           {tab.label}
           {active === tab.id && (
-            <span className="wa-filter-tabs__indicator absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-10 rounded-full bg-[#00a884]" />
+            <span className="wa-filter-tabs__indicator" />
           )}
         </button>
       ))}
@@ -356,36 +340,15 @@ function BottomNav({
   ];
 
   return (
-    <nav
-      className={cn(
-        "wa-bottom-nav",
-        "bg-white border-t border-[rgba(17,27,33,0.08)] flex pb-safe shrink-0",
-        className
-      )}
-    >
+    <nav className={cn("wa-bottom-nav", className)}>
       {tabs.map(({ id, label, icon: Icon }) => (
         <button
           key={id}
           onClick={() => onChange(id)}
-          className={cn(
-            "wa-bottom-nav__tab",
-            active === id && "wa-bottom-nav__tab--active",
-            "flex-1 flex flex-col items-center gap-0.5 py-2.5 transition-colors"
-          )}
+          className={cn("wa-bottom-nav__tab", active === id && "wa-bottom-nav__tab--active")}
         >
-          <Icon
-            size={22}
-            className={cn(
-              "wa-bottom-nav__tab-icon",
-              active === id ? "text-[#00a884]" : "text-[#54656f]"
-            )}
-          />
-          <span
-            className="wa-bottom-nav__tab-label text-[10px] font-medium"
-            style={{ color: active === id ? "#00a884" : "#54656f" }}
-          >
-            {label}
-          </span>
+          <Icon size={22} className="wa-bottom-nav__tab-icon" />
+          <span className="wa-bottom-nav__tab-label">{label}</span>
         </button>
       ))}
     </nav>
@@ -407,50 +370,33 @@ export default function MobilePage() {
   });
 
   return (
-    <div className="wa-mobile-playground min-h-screen bg-[#e5ddd5] flex flex-col items-center justify-center p-6">
+    <div className="wa-mobile-playground">
       {/* Back link */}
-      <div className="wa-mobile-playground__back mb-6 self-start">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-white/80 hover:text-white transition-colors"
-        >
+      <div className="wa-mobile-playground__back">
+        <Link href="/" className="wa-mobile-playground__back-link">
           <ArrowLeft size={16} />
           Playground
         </Link>
       </div>
 
-      <p className="wa-mobile-playground__label text-xs text-white/50 mb-4 font-medium tracking-wide uppercase">
-        Mobile Prototype
-      </p>
+      <p className="wa-mobile-playground__label">Mobile Prototype</p>
 
       {/* Phone frame */}
-      <div
-        className="wa-phone-frame relative bg-white overflow-hidden flex flex-col"
-        style={{
-          width: 390,
-          height: 844,
-          borderRadius: 44,
-          border: "10px solid #1a1a1a",
-          boxShadow: "0 70px 140px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.15)",
-        }}
-      >
+      <div className="wa-phone-frame">
         {/* Notch */}
-        <div
-          className="wa-phone-frame__notch absolute top-0 left-1/2 -translate-x-1/2 z-10 bg-[#1a1a1a]"
-          style={{ width: 120, height: 32, borderRadius: "0 0 20px 20px" }}
-        />
+        <div className="wa-phone-frame__notch" />
 
         {/* Screen content */}
-        <div className="wa-phone-frame__screen flex flex-col h-full pt-10 overflow-hidden">
+        <div className="wa-phone-frame__screen">
           <StatusBar />
           <TopAppBar />
           <FilterTabs active={filterTab} onChange={setFilterTab} />
 
           {/* Chat list */}
-          <div className="wa-mobile-chat-list flex-1 overflow-y-auto bg-white">
+          <div className="wa-mobile-chat-list">
             {filtered.length === 0 ? (
-              <div className="wa-mobile-chat-list__empty flex flex-col items-center justify-center h-full text-[#667781] text-sm gap-2">
-                <MessageSquare size={40} className="opacity-30" />
+              <div className="wa-mobile-chat-list__empty">
+                <MessageSquare size={40} className="wa-mobile-chat-list__empty-icon" />
                 <p>No conversations</p>
               </div>
             ) : (
