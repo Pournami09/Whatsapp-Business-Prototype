@@ -139,14 +139,16 @@ function SidebarIcon({
       onClick={onClick}
       title={label}
       className={cn(
+        "wa-sidebar-icon",
+        active && "wa-sidebar-icon--active",
         "relative flex items-center justify-center w-10 h-10 rounded-xl transition-colors hover:bg-black/5",
         className
       )}
       style={{ color: active ? "#00a884" : "#54656f" }}
     >
-      {children}
+      <span className="wa-sidebar-icon__glyph">{children}</span>
       {badge ? (
-        <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 bg-[#00a884] text-white text-[10px] font-bold rounded-full flex items-center justify-center px-0.5 leading-none">
+        <span className="wa-sidebar-icon__badge absolute -top-0.5 -right-0.5 min-w-[16px] h-4 bg-[#00a884] text-white text-[10px] font-bold rounded-full flex items-center justify-center px-0.5 leading-none">
           {badge}
         </span>
       ) : null}
@@ -167,82 +169,88 @@ function IconSidebar({
 }) {
   return (
     <aside
-      className={cn("flex flex-col items-center py-3 gap-1 shrink-0", className)}
+      className={cn("wa-icon-sidebar", "flex flex-col items-center py-3 gap-1 shrink-0", className)}
       style={{
         width: 63,
         backgroundColor: "#f0f2f5",
         borderRight: "1px solid rgba(17,27,33,0.08)",
       }}
     >
-      {/* WA logo */}
-      <div className="mb-2">
+      {/* Logo */}
+      <div className="wa-icon-sidebar__logo mb-2">
         <svg viewBox="0 0 24 24" width="28" height="28" fill="#00a884">
           <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 0 1-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24zM8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28c-.25-.12-1.47-.72-1.69-.8-.23-.08-.37-.12-.56.12-.16.19-.62.8-.76.96-.11.17-.23.19-.42.1-.19-.09-.81-.3-1.54-.95-.57-.5-.95-1.12-1.06-1.31-.11-.19-.01-.29.08-.39.08-.09.19-.23.28-.35.09-.12.12-.21.19-.35.06-.13.03-.25-.02-.35-.06-.09-.56-1.35-.77-1.84-.2-.48-.41-.42-.56-.43-.14 0-.3-.01-.47-.01z" />
         </svg>
       </div>
 
-      <SidebarIcon
-        active={activeSidebarTab === "chats"}
-        badge={1}
-        label="Chats"
-        onClick={() => setActiveSidebarTab("chats")}
-      >
-        <MessageSquare size={20} />
-      </SidebarIcon>
+      {/* Nav */}
+      <nav className="wa-icon-sidebar__nav flex flex-col items-center gap-1">
+        <SidebarIcon
+          active={activeSidebarTab === "chats"}
+          badge={1}
+          label="Chats"
+          onClick={() => setActiveSidebarTab("chats")}
+        >
+          <MessageSquare size={20} />
+        </SidebarIcon>
 
-      <SidebarIcon
-        active={activeSidebarTab === "status"}
-        label="Status"
-        onClick={() => setActiveSidebarTab("status")}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
-          <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="1.8" strokeDasharray="3 2" />
-          <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-        </svg>
-      </SidebarIcon>
+        <SidebarIcon
+          active={activeSidebarTab === "status"}
+          label="Status"
+          onClick={() => setActiveSidebarTab("status")}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
+            <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="1.8" strokeDasharray="3 2" />
+            <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+          </svg>
+        </SidebarIcon>
 
-      <SidebarIcon
-        active={activeSidebarTab === "channels"}
-        label="Channels"
-        onClick={() => setActiveSidebarTab("channels")}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-          <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
-          <line x1="4" y1="22" x2="4" y2="15" />
-        </svg>
-      </SidebarIcon>
+        <SidebarIcon
+          active={activeSidebarTab === "channels"}
+          label="Channels"
+          onClick={() => setActiveSidebarTab("channels")}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+            <line x1="4" y1="22" x2="4" y2="15" />
+          </svg>
+        </SidebarIcon>
 
-      <SidebarIcon
-        active={activeSidebarTab === "communities"}
-        label="Communities"
-        onClick={() => setActiveSidebarTab("communities")}
-      >
-        <Users size={20} />
-      </SidebarIcon>
+        <SidebarIcon
+          active={activeSidebarTab === "communities"}
+          label="Communities"
+          onClick={() => setActiveSidebarTab("communities")}
+        >
+          <Users size={20} />
+        </SidebarIcon>
 
-      <SidebarIcon
-        active={activeSidebarTab === "starred"}
-        label="Starred messages"
-        onClick={() => setActiveSidebarTab("starred")}
-      >
-        <Star size={20} />
-      </SidebarIcon>
+        <SidebarIcon
+          active={activeSidebarTab === "starred"}
+          label="Starred messages"
+          onClick={() => setActiveSidebarTab("starred")}
+        >
+          <Star size={20} />
+        </SidebarIcon>
+      </nav>
 
-      <div className="flex-1" />
+      <div className="wa-icon-sidebar__spacer flex-1" />
 
-      <SidebarIcon label="Meta AI">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
-        </svg>
-      </SidebarIcon>
+      {/* Bottom */}
+      <div className="wa-icon-sidebar__bottom flex flex-col items-center gap-1">
+        <SidebarIcon label="Meta AI">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
+          </svg>
+        </SidebarIcon>
 
-      <SidebarIcon label="Settings">
-        <Settings size={20} />
-      </SidebarIcon>
+        <SidebarIcon label="Settings">
+          <Settings size={20} />
+        </SidebarIcon>
 
-      <div className="mt-1">
-        <ChatAvatar name="Pournami Pottekat" size={34} style={{ backgroundColor: "#9e9e9e" }} />
+        <div className="wa-icon-sidebar__avatar mt-1">
+          <ChatAvatar name="Pournami Pottekat" size={34} style={{ backgroundColor: "#9e9e9e" }} />
+        </div>
       </div>
     </aside>
   );
@@ -265,6 +273,8 @@ function ChatListItem({
     <button
       onClick={onSelect}
       className={cn(
+        "wa-chat-list-item",
+        isActive && "wa-chat-list-item--active",
         "w-full flex items-center gap-3 px-3 py-3 text-left transition-colors",
         className
       )}
@@ -277,57 +287,58 @@ function ChatListItem({
       }}
     >
       {/* Avatar */}
-      <div className="relative shrink-0">
+      <div className="wa-chat-list-item__avatar relative shrink-0">
         <ChatAvatar
           name={chat.name}
           size={48}
+          className="wa-chat-list-item__avatar-img"
           style={{ backgroundColor: chat.avatarColor }}
         />
         {chat.isGroup && (
-          <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-[#00a884] rounded-full flex items-center justify-center">
+          <span className="wa-chat-list-item__avatar-badge wa-chat-list-item__avatar-badge--group absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-[#00a884] rounded-full flex items-center justify-center">
             <Users size={9} className="text-white" />
           </span>
         )}
         {chat.isAI && (
-          <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-[#00a884] rounded-full flex items-center justify-center text-white text-[8px] font-bold">
+          <span className="wa-chat-list-item__avatar-badge wa-chat-list-item__avatar-badge--ai absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-[#00a884] rounded-full flex items-center justify-center text-white text-[8px] font-bold">
             AI
           </span>
         )}
       </div>
 
       {/* Content */}
-      <div className="flex-1 min-w-0 border-b border-[rgba(17,27,33,0.06)] pb-3 -mb-3">
-        <div className="flex items-center justify-between mb-0.5">
-          <span className="font-semibold text-[14.5px] text-[#111b21] truncate pr-2 leading-tight">
+      <div className="wa-chat-list-item__content flex-1 min-w-0 border-b border-[rgba(17,27,33,0.06)] pb-3 -mb-3">
+        <div className="wa-chat-list-item__row wa-chat-list-item__row--top flex items-center justify-between mb-0.5">
+          <span className="wa-chat-list-item__name font-semibold text-[14.5px] text-[#111b21] truncate pr-2 leading-tight">
             {chat.name}
           </span>
           <span
-            className="text-[11px] shrink-0"
+            className="wa-chat-list-item__timestamp text-[11px] shrink-0"
             style={{ color: (chat.unread ?? 0) > 0 ? "#00a884" : "#667781" }}
           >
             {chat.timestamp}
           </span>
         </div>
 
-        <div className="flex items-start justify-between gap-2">
-          <span className="flex items-center gap-1 text-[13px] text-[#667781] truncate leading-snug">
-            {chat.isOutgoing && <CheckCheck size={13} className="shrink-0 text-[#53bdeb]" />}
-            {chat.isVoiceNote && <Mic size={12} className="shrink-0 text-[#667781]" />}
+        <div className="wa-chat-list-item__row wa-chat-list-item__row--bottom flex items-start justify-between gap-2">
+          <span className="wa-chat-list-item__preview flex items-center gap-1 text-[13px] text-[#667781] truncate leading-snug">
+            {chat.isOutgoing && <CheckCheck size={13} className="wa-chat-list-item__read-tick shrink-0 text-[#53bdeb]" />}
+            {chat.isVoiceNote && <Mic size={12} className="wa-chat-list-item__voice-icon shrink-0 text-[#667781]" />}
             {chat.lastMessage}
           </span>
           {(chat.unread ?? 0) > 0 && (
-            <span className="shrink-0 min-w-[18px] h-[18px] bg-[#00a884] text-white text-[10px] font-semibold rounded-full flex items-center justify-center px-1 leading-none">
+            <span className="wa-chat-list-item__unread-badge shrink-0 min-w-[18px] h-[18px] bg-[#00a884] text-white text-[10px] font-semibold rounded-full flex items-center justify-center px-1 leading-none">
               {chat.unread}
             </span>
           )}
         </div>
 
         {chat.labels && chat.labels.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-1">
+          <div className="wa-chat-list-item__labels flex flex-wrap gap-1 mt-1">
             {chat.labels.map((l) => (
               <span
                 key={l.text}
-                className="text-[9px] font-bold tracking-wide px-1.5 py-0.5 rounded-full uppercase"
+                className="wa-chat-list-item__label text-[9px] font-bold tracking-wide px-1.5 py-0.5 rounded-full uppercase"
                 style={{ color: l.textColor, backgroundColor: l.bg }}
               >
                 {l.text}
@@ -363,43 +374,43 @@ function ChatListPanel({
 
   return (
     <div
-      className={cn("flex flex-col shrink-0 overflow-hidden", className)}
+      className={cn("wa-chat-list-panel", "flex flex-col shrink-0 overflow-hidden", className)}
       style={{
         width: 350,
         borderRight: "1px solid rgba(17,27,33,0.08)",
         backgroundColor: "#ffffff",
       }}
     >
-      {/* Panel header */}
+      {/* Header */}
       <div
-        className="flex items-center justify-between px-4 py-3 shrink-0"
+        className="wa-chat-list-panel__header flex items-center justify-between px-4 py-3 shrink-0"
         style={{ backgroundColor: "#f0f2f5" }}
       >
-        <span className="text-[#111b21] text-xl font-bold">WhatsApp</span>
-        <div className="flex items-center gap-1">
-          <button className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+        <span className="wa-chat-list-panel__header-title text-[#111b21] text-xl font-bold">WhatsApp</span>
+        <div className="wa-chat-list-panel__header-actions flex items-center gap-1">
+          <button className="wa-chat-list-panel__header-btn wa-chat-list-panel__header-btn--new w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
             <Plus size={18} className="text-[#54656f]" />
           </button>
-          <button className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+          <button className="wa-chat-list-panel__header-btn wa-chat-list-panel__header-btn--menu w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
             <MoreVertical size={18} className="text-[#54656f]" />
           </button>
         </div>
       </div>
 
       {/* Search */}
-      <div className="px-3 py-2 shrink-0" style={{ backgroundColor: "#f0f2f5" }}>
-        <div className="flex items-center gap-2 bg-white rounded-lg px-3 py-2">
-          <Search size={15} className="text-[#54656f] shrink-0" />
+      <div className="wa-chat-list-panel__search-wrap px-3 py-2 shrink-0" style={{ backgroundColor: "#f0f2f5" }}>
+        <div className="wa-chat-list-panel__search flex items-center gap-2 bg-white rounded-lg px-3 py-2">
+          <Search size={15} className="wa-chat-list-panel__search-icon text-[#54656f] shrink-0" />
           <input
             type="text"
             placeholder="Search or start a new chat"
-            className="flex-1 text-[13.5px] text-[#111b21] placeholder-[#8696a0] outline-none bg-transparent border-none"
+            className="wa-chat-list-panel__search-input flex-1 text-[13.5px] text-[#111b21] placeholder-[#8696a0] outline-none bg-transparent border-none"
           />
         </div>
       </div>
 
       {/* Filter chips */}
-      <div className="flex items-center gap-2 px-3 py-2 shrink-0 bg-white">
+      <div className="wa-chat-list-panel__filters flex items-center gap-2 px-3 py-2 shrink-0 bg-white">
         {(
           [
             { id: "all", label: "All" },
@@ -410,7 +421,11 @@ function ChatListPanel({
           <button
             key={tab.id}
             onClick={() => setFilterTab(tab.id)}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[13px] font-medium transition-colors shrink-0"
+            className={cn(
+              "wa-chat-list-panel__filter-chip",
+              filterTab === tab.id && "wa-chat-list-panel__filter-chip--active",
+              "flex items-center gap-1.5 px-3 py-1 rounded-full text-[13px] font-medium transition-colors shrink-0"
+            )}
             style={
               filterTab === tab.id
                 ? { backgroundColor: "#d9fdd3", color: "#1a5c38" }
@@ -419,14 +434,14 @@ function ChatListPanel({
           >
             {tab.dot && (
               <span
-                className="w-2 h-2 rounded-full shrink-0"
+                className="wa-chat-list-panel__filter-chip-dot w-2 h-2 rounded-full shrink-0"
                 style={{ backgroundColor: tab.dot }}
               />
             )}
             {tab.label}
           </button>
         ))}
-        <button className="w-6 h-6 flex items-center justify-center shrink-0 ml-auto">
+        <button className="wa-chat-list-panel__filters-more w-6 h-6 flex items-center justify-center shrink-0 ml-auto">
           <ChevronDown size={14} className="text-[#54656f]" />
         </button>
       </div>
@@ -434,19 +449,19 @@ function ChatListPanel({
       {/* Notification banner */}
       {showBanner && (
         <div
-          className="flex items-center gap-3 px-4 py-3 shrink-0"
+          className="wa-chat-list-panel__notification-banner flex items-center gap-3 px-4 py-3 shrink-0"
           style={{ backgroundColor: "#fff8e1", borderBottom: "1px solid rgba(17,27,33,0.06)" }}
         >
-          <BellOff size={18} className="text-[#54656f] shrink-0" />
-          <div className="flex-1 min-w-0">
+          <BellOff size={18} className="wa-chat-list-panel__notification-icon text-[#54656f] shrink-0" />
+          <div className="wa-chat-list-panel__notification-text flex-1 min-w-0">
             <span className="text-[12.5px] text-[#54656f]">
               Message and call notifications are off.{" "}
             </span>
-            <button className="text-[12.5px] font-semibold text-[#00a884]">Turn on</button>
+            <button className="wa-chat-list-panel__notification-cta text-[12.5px] font-semibold text-[#00a884]">Turn on</button>
           </div>
           <button
             onClick={() => setShowBanner(false)}
-            className="shrink-0 w-6 h-6 flex items-center justify-center hover:bg-black/5 rounded-full"
+            className="wa-chat-list-panel__notification-dismiss shrink-0 w-6 h-6 flex items-center justify-center hover:bg-black/5 rounded-full"
           >
             <X size={14} className="text-[#54656f]" />
           </button>
@@ -454,9 +469,9 @@ function ChatListPanel({
       )}
 
       {/* Chat list */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="wa-chat-list-panel__list flex-1 overflow-y-auto">
         {filtered.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-32 text-[#667781] text-sm gap-2">
+          <div className="wa-chat-list-panel__empty flex flex-col items-center justify-center h-32 text-[#667781] text-sm gap-2">
             <MessageSquare size={28} className="opacity-30" />
             <p className="text-[13px]">No conversations</p>
           </div>
@@ -488,18 +503,19 @@ function ChatArea({
     return (
       <div
         className={cn(
+          "wa-chat-area wa-chat-area--empty",
           "flex-1 flex flex-col items-center justify-center gap-3",
           className
         )}
         style={{ backgroundColor: "#f0f2f5" }}
       >
-        <div className="w-16 h-16 rounded-full bg-[#dfe5e7] flex items-center justify-center">
+        <div className="wa-chat-area__empty-icon w-16 h-16 rounded-full bg-[#dfe5e7] flex items-center justify-center">
           <MessageSquare size={28} className="text-[#8696a0]" />
         </div>
-        <p className="text-[16px] text-[#54656f] font-light">
+        <p className="wa-chat-area__empty-title text-[16px] text-[#54656f] font-light">
           Select a chat to start messaging
         </p>
-        <p className="text-[13px] text-[#8696a0]">
+        <p className="wa-chat-area__empty-subtitle text-[13px] text-[#8696a0]">
           Your messages are end-to-end encrypted
         </p>
       </div>
@@ -507,51 +523,51 @@ function ChatArea({
   }
 
   return (
-    <div className={cn("flex-1 flex flex-col overflow-hidden", className)}>
+    <div className={cn("wa-chat-area", "flex-1 flex flex-col overflow-hidden", className)}>
       {/* Chat header */}
       <div
-        className="flex items-center justify-between px-4 py-2.5 shrink-0"
+        className="wa-chat-area__header flex items-center justify-between px-4 py-2.5 shrink-0"
         style={{ backgroundColor: "#f0f2f5", borderBottom: "1px solid rgba(17,27,33,0.06)" }}
       >
-        <div className="flex items-center gap-3">
-          <div className="relative">
+        <div className="wa-chat-area__header-contact flex items-center gap-3">
+          <div className="wa-chat-area__header-avatar relative">
             <ChatAvatar
               name={chat.name}
               size={40}
               style={{ backgroundColor: chat.avatarColor }}
             />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-[15px] font-semibold text-[#111b21] leading-tight">
+          <div className="wa-chat-area__header-info">
+            <div className="wa-chat-area__header-name-row flex items-center gap-2">
+              <span className="wa-chat-area__header-name text-[15px] font-semibold text-[#111b21] leading-tight">
                 {chat.name}
               </span>
               {chat.labels?.map((l) => (
                 <span
                   key={l.text}
-                  className="text-[9px] font-bold tracking-wide px-1.5 py-0.5 rounded-full uppercase"
+                  className="wa-chat-area__header-label text-[9px] font-bold tracking-wide px-1.5 py-0.5 rounded-full uppercase"
                   style={{ color: l.textColor, backgroundColor: l.bg }}
                 >
                   {l.text}
                 </span>
               ))}
             </div>
-            <span className="text-[12px] text-[#667781]">
+            <span className="wa-chat-area__header-subtitle text-[12px] text-[#667781]">
               {chat.isGroup ? "Group" : "click here for contact info"}
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-1">
-          <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+        <div className="wa-chat-area__header-actions flex items-center gap-1">
+          <button className="wa-chat-area__header-btn wa-chat-area__header-btn--video w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
             <Video size={18} className="text-[#54656f]" />
           </button>
-          <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+          <button className="wa-chat-area__header-btn wa-chat-area__header-btn--call w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
             <Phone size={18} className="text-[#54656f]" />
           </button>
-          <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+          <button className="wa-chat-area__header-btn wa-chat-area__header-btn--search w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
             <Search size={18} className="text-[#54656f]" />
           </button>
-          <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+          <button className="wa-chat-area__header-btn wa-chat-area__header-btn--menu w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
             <MoreVertical size={18} className="text-[#54656f]" />
           </button>
         </div>
@@ -559,14 +575,14 @@ function ChatArea({
 
       {/* Message area */}
       <div
-        className="flex-1 relative overflow-hidden"
+        className="wa-chat-area__messages flex-1 relative overflow-hidden"
         style={{ backgroundColor: "#efeae2" }}
       >
-        <div className="absolute inset-0 wa-doodle opacity-40 pointer-events-none" />
+        <div className="wa-chat-area__messages-bg absolute inset-0 wa-doodle opacity-40 pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col gap-2 p-4 h-full overflow-y-auto">
+        <div className="wa-chat-area__messages-scroll relative z-10 flex flex-col gap-2 p-4 h-full overflow-y-auto">
           {/* Encryption notice */}
-          <div className="flex justify-center my-2">
+          <div className="wa-chat-area__encryption-notice flex justify-center my-2">
             <div
               className="text-center text-[11.5px] text-[#54656f] px-4 py-2 rounded-lg max-w-xs"
               style={{ backgroundColor: "#fffde7" }}
@@ -577,7 +593,7 @@ function ChatArea({
           </div>
 
           {/* Date divider */}
-          <div className="flex items-center justify-center">
+          <div className="wa-chat-area__date-divider flex items-center justify-center">
             <span
               className="text-[11.5px] text-[#54656f] px-3 py-1 rounded-full"
               style={{ backgroundColor: "#fffde7" }}
@@ -587,44 +603,44 @@ function ChatArea({
           </div>
 
           {/* Incoming message */}
-          <div className="flex justify-start">
+          <div className="wa-chat-area__message wa-chat-area__message--incoming flex justify-start">
             <div
-              className="max-w-xs rounded-lg rounded-tl-none px-3 py-2 text-[14px] text-[#111b21]"
+              className="wa-chat-area__message-bubble max-w-xs rounded-lg rounded-tl-none px-3 py-2 text-[14px] text-[#111b21]"
               style={{ backgroundColor: "#ffffff", boxShadow: "0 1px 0.5px rgba(11,20,26,0.13)" }}
             >
-              <span>Hello</span>
-              <span className="ml-2 text-[11px] text-[#667781]">11:10 PM</span>
+              <span className="wa-chat-area__message-text">Hello</span>
+              <span className="wa-chat-area__message-meta ml-2 text-[11px] text-[#667781]">11:10 PM</span>
             </div>
           </div>
 
           {/* Outgoing voice note */}
-          <div className="flex justify-end">
+          <div className="wa-chat-area__message wa-chat-area__message--outgoing flex justify-end">
             <div
-              className="flex items-center gap-2 rounded-lg rounded-tr-none px-3 py-2"
+              className="wa-chat-area__voice-note flex items-center gap-2 rounded-lg rounded-tr-none px-3 py-2"
               style={{
                 backgroundColor: "#d9fdd3",
                 boxShadow: "0 1px 0.5px rgba(11,20,26,0.13)",
                 minWidth: 180,
               }}
             >
-              <button className="w-8 h-8 rounded-full bg-[#00a884] flex items-center justify-center shrink-0">
+              <button className="wa-chat-area__voice-note-play w-8 h-8 rounded-full bg-[#00a884] flex items-center justify-center shrink-0">
                 <svg width="12" height="14" viewBox="0 0 12 14" fill="white">
                   <path d="M0 0l12 7L0 14z" />
                 </svg>
               </button>
-              <div className="flex-1">
-                <div className="flex items-center gap-0.5 mb-1">
+              <div className="wa-chat-area__voice-note-body flex-1">
+                <div className="wa-chat-area__voice-note-waveform flex items-center gap-0.5 mb-1">
                   {[4,6,10,14,8,12,16,6,10,14,8,5,12,16,10,8,14,6,10,8,12,6,8,4].map((h, i) => (
                     <div
                       key={i}
-                      className="w-0.5 rounded-full bg-[#00a884]"
+                      className="wa-chat-area__voice-note-bar w-0.5 rounded-full bg-[#00a884]"
                       style={{ height: h }}
                     />
                   ))}
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] text-[#667781]">3:02</span>
-                  <div className="flex items-center gap-1">
+                <div className="wa-chat-area__voice-note-footer flex items-center justify-between">
+                  <span className="wa-chat-area__voice-note-duration text-[11px] text-[#667781]">3:02</span>
+                  <div className="wa-chat-area__message-meta flex items-center gap-1">
                     <span className="text-[11px] text-[#667781]">11:11 PM</span>
                     <CheckCheck size={12} className="text-[#53bdeb]" />
                   </div>
@@ -634,13 +650,13 @@ function ChatArea({
           </div>
 
           {/* Outgoing message */}
-          <div className="flex justify-end">
+          <div className="wa-chat-area__message wa-chat-area__message--outgoing flex justify-end">
             <div
-              className="max-w-xs rounded-lg rounded-tr-none px-3 py-2 text-[14px] text-[#111b21]"
+              className="wa-chat-area__message-bubble max-w-xs rounded-lg rounded-tr-none px-3 py-2 text-[14px] text-[#111b21]"
               style={{ backgroundColor: "#d9fdd3", boxShadow: "0 1px 0.5px rgba(11,20,26,0.13)" }}
             >
-              <span>Hello</span>
-              <span className="inline-flex items-center gap-1 ml-2">
+              <span className="wa-chat-area__message-text">Hello</span>
+              <span className="wa-chat-area__message-meta inline-flex items-center gap-1 ml-2">
                 <span className="text-[11px] text-[#667781]">11:09 PM</span>
                 <CheckCheck size={12} className="text-[#53bdeb]" />
               </span>
@@ -651,19 +667,19 @@ function ChatArea({
 
       {/* Input bar */}
       <div
-        className="flex items-center gap-2 px-3 py-2.5 shrink-0"
+        className="wa-chat-area__input-bar flex items-center gap-2 px-3 py-2.5 shrink-0"
         style={{ backgroundColor: "#f0f2f5" }}
       >
-        <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+        <button className="wa-chat-area__input-btn wa-chat-area__input-btn--emoji w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
           <Smile size={22} className="text-[#54656f]" />
         </button>
-        <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+        <button className="wa-chat-area__input-btn wa-chat-area__input-btn--attach w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
           <Paperclip size={20} className="text-[#54656f]" />
         </button>
-        <div className="flex-1 bg-white rounded-lg px-4 py-2.5 text-[14px] text-[#8696a0] cursor-text">
+        <div className="wa-chat-area__input-field flex-1 bg-white rounded-lg px-4 py-2.5 text-[14px] text-[#8696a0] cursor-text">
           Type a message
         </div>
-        <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+        <button className="wa-chat-area__input-btn wa-chat-area__input-btn--mic w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
           <Mic size={22} className="text-[#54656f]" />
         </button>
       </div>
@@ -680,9 +696,9 @@ export default function WebPage() {
   const selectedChat = conversations.find((c) => c.id === selectedId);
 
   return (
-    <div className="h-screen flex flex-col bg-[#111b21] overflow-hidden">
+    <div className="wa-web-playground h-screen flex flex-col bg-[#111b21] overflow-hidden">
       {/* Back link bar */}
-      <div className="shrink-0 px-4 py-2 flex items-center gap-3" style={{ backgroundColor: "#1a2a33" }}>
+      <div className="wa-web-playground__topbar shrink-0 px-4 py-2 flex items-center gap-3" style={{ backgroundColor: "#1a2a33" }}>
         <Link
           href="/"
           className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-white/80 transition-colors"
@@ -695,7 +711,7 @@ export default function WebPage() {
       </div>
 
       {/* Main 3-panel layout */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="wa-web-layout flex flex-1 overflow-hidden">
         <IconSidebar
           activeSidebarTab={activeSidebarTab}
           setActiveSidebarTab={setActiveSidebarTab}
